@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//Avisando onde se encontra a Model
+use App\Produto;
+
 class ControladorProduto extends Controller
 {
     /**
@@ -13,7 +16,7 @@ class ControladorProduto extends Controller
      */
     public function index()
     {
-        return view('categorias');
+        return view('produtos');
     }
 
     /**
