@@ -13,7 +13,6 @@
 
                     <label class="my-1 mr-2" for="selectcategoria">Categoria</label>
                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="selectCategoria">
-                        <?php echo "<pre>"; var_dump($cats);?>
                         <option selected>Choose...</option>
                         @foreach ($cats as $cat)
                             <option value="{{$cat->id}}">{{$cat->nome}}</option>
