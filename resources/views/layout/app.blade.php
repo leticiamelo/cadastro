@@ -3,7 +3,7 @@
 <head>
 	<link rel="stylesheet" href="{{asset('css/app.css')}}">
 	<title>Cadastro de Produtos</title>
-	<meta name="csrf-token" content="{{csrf-token()}}">
+	<meta name="csrf-token" content="{{csrf_token()}}">
 	<style>
 		body{
 			padding: 20px;

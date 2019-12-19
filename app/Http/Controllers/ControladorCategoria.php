@@ -17,7 +17,7 @@ class ControladorCategoria extends Controller
     public function index()
     {
         $cats = Categoria::all();
-        return view('categoria', compact('cats'));
+        return view('categorias', compact('cats'));
     }
 
     /**

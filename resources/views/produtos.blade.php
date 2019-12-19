@@ -34,7 +34,7 @@
 			@endif	
 		</div>	
 		<div class="card-footer">
-			<a href="/produto/novo" class="btn btn-sm btn-primary" role="button">Novo Produto</a>
+			<a href="/produtos/novo" class="btn btn-sm btn-primary" role="button">Novo Produto</a>
 		</div>	
 	</div>
 @endsection

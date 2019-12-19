@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //Avisando onde se encontra a Model
 use App\Produto;
+use App\Categoria;
 
 class ControladorProduto extends Controller
 {
