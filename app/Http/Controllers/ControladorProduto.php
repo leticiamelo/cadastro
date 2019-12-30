@@ -6,19 +6,22 @@ use Illuminate\Http\Request;
 
 //Avisando onde se encontra a Model
 use App\Produto;
-use App\Categoria;
+
 
 class ControladorProduto extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function indexView()
+    {
+        
+        return view('produtos');
+  
+    }
+
+
     public function index()
     {
         $prods = Produto::all();
-        return view('produtos', compact('prods'));
+        return $prods->toJson();
   
     }
 
