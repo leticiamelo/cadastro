@@ -13,7 +13,7 @@
 						<th>Nome</th>
 						<th>Quantidade</th>
 						<th>Preço</th>
-						<th>Departamento</th>
+						<th>categoria</th>
 						<th>Ações</th>
 					</tr>	
 				</thead>
@@ -63,9 +63,9 @@
 
 						
 						<div class="form-group">
-							<label for="departamentoProduto" class="control-label">Departamento</label>
+							<label for="categoriaProduto" class="control-label">categoria</label>
 							<div class="input-group">
-								<select class="form-control" id="departamentoProduto">
+								<select class="form-control" id="categoriaProduto">
 
 								</select>
 							</div>
@@ -74,7 +74,7 @@
 					</div>	
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary">Salvar</button>
-						<button type="cancel" class="btn btn-secondary" data-dissmiss="modal">Cancelar</button>
+						<button type="cancel" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 					</div>		
 				</form>	
 			</div>
@@ -117,12 +117,44 @@
 					"<td>" + p.preco + "</td>" +
 					"<td>" + p.categoria_id + "</td>" +
 					"<td>" +
-					  '<button class="btn btn-sm btn-primary"> Editar </button>'	+
-					  '<button class="btn btn-sm btn-danger"> Apagar </button>'	+
+					  '<button class="btn btn-sm btn-primary" onclick="editar(' + p.id +')"> Editar </button>'	+
+					  '<button class="btn btn-sm btn-danger" onclick="remover(' + p.id +')"> Apagar </button>'	+
 					"</td>" +
 					"</tr>";
 				return linha;	
 
+		}
+
+		function editar(id){
+			$.getJSON('/api/produtos' + id, function(data) {
+				console.log(data);
+				$('#id').val(data.id);
+				$('#nomeProduto').val(data.nome);
+				$('#precoProduto').val(data.preco);
+				$('#quantidadeProduto').val(data.estoque);
+				$('#categoriaProduto').val(data.categoria_id);
+				$('#dlgProdutos').modal('show');
+			});
+		}
+
+		function remover(id){
+			$.ajax({
+				type: "DELETE",
+				url: "/api/produtos/" + id,
+				context: this,
+				success: function(){
+					console.log('Apagou com sucesso');
+					linhas = $("#tabelaProdutos>tbody>tr");
+					e = linhas.filter(function (i, elemento){
+						return elemento.cells[0].textContent == id;
+					});
+					if (e)
+						e.remove();
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});
 		}
 
 		function carregarProdutos(){
@@ -132,8 +164,29 @@
 					linha=montarLinha(produtos[i]);
 					$('#tabelaProdutos>tbody').append(linha);
 				}
-			})
+			});
 		}
+
+		function criarProduto(){
+			prod = {
+				nome: $("#nomeProduto").val(),
+				preco: $("#precoProduto").val(),
+				estoque: $("#quantidadeProduto").val(),
+				categoria_id: $("#categoriaProduto").val()
+			};
+
+			$.post("/api/produtos", prod, function(data){
+				produto = JSON.parse(data);
+				linha = montarLinha(produto);
+				$('#tabelaProdutos>tbody').append(linha);
+			});
+		}
+
+		$("#formProduto").submit(function(event){
+			event.preventDefault();
+			criarProduto();
+			$("#dlgProdutos").modal('hide');
+		});
 
 		$(function(){
 			carregarCategorias();
